@@ -1,0 +1,17 @@
+add_rules("mode.debug", "mode.release")
+
+target("the_puzzle")
+    set_kind("binary") 
+    add_rules("qt.widgetapp")
+    add_frameworks("QtMultimedia")
+    add_headerfiles("src/main/*.h")
+    add_files("src/main/*.cc")
+    add_files("src/core/*.cc")
+    add_files("src/main/mainwindow.ui")
+    -- add files with Q_OBJECT meta (only for qt.moc)
+    add_files("src/main/mainwindow.h")
+    add_files("src/core/scene_button.h")
+
+    after_build(function (target)
+        os.cp("src/res", target:targetdir())
+    end)
